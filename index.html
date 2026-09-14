@@ -1,361 +1,597 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>我的退休財務計畫</title>
+<title>個股增益試算</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F7F7F7;color:#222;padding:24px 16px}
-h1{font-size:22px;font-weight:700;margin:0 0 4px;color:#111}
-.sub{font-size:13px;color:#888;margin:0 0 18px}
-.rapp{max-width:600px;margin:0 auto}
-.rbox{background:#fff;border:1px solid #E5E5E5;border-radius:12px;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.rhead{display:flex;align-items:center;gap:9px;margin-bottom:16px}
-.rnum{width:28px;height:28px;border-radius:50%;background:#E6F1FB;color:#0C447C;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.rnumg{width:28px;height:28px;border-radius:50%;background:#E0F5F0;color:#1A7A6A;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.rtitle{font-size:16px;font-weight:600}
-.rf{margin-bottom:13px}.rf:last-child{margin-bottom:0}
-.rfrow{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
-.rfl{font-size:13px;color:#555;width:120px;min-width:120px;flex-shrink:0;line-height:1.4}
-.rfi{width:100px;font-size:14px;font-weight:600;color:#111;border:1.5px solid #ddd;border-radius:7px;padding:6px 10px;text-align:right;background:#fff;flex-shrink:0}
-.rfi:focus{outline:none;border-color:#378ADD}
-.rfu{font-size:13px;color:#888;white-space:nowrap;flex-shrink:0}
-.rfuw{font-size:13px;font-weight:700;color:#C05000;white-space:nowrap;flex-shrink:0}
-.rfh{font-size:11px;color:#bbb;margin-top:4px;padding-left:130px;line-height:1.5}
-.rph{font-size:11px;color:#C05000;background:#FFF5EE;border:1px solid #F5C9A0;border-radius:6px;padding:4px 10px;margin-top:4px;margin-left:130px;display:inline-block}
-.rwn{font-size:11px;color:#A32D2D;background:#FCEBEB;border:1px solid #F5C0C0;border-radius:6px;padding:4px 10px;margin-top:4px;margin-left:130px;display:none}
-.ropts{display:flex;flex-direction:column;gap:8px;flex:1}
-.ropt{cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;border:2px solid #E0E0E0;background:#FAFAFA;user-select:none;min-height:48px;-webkit-tap-highlight-color:rgba(0,0,0,0.05);touch-action:manipulation}
-.ropt:active{opacity:0.85}
-.ropt.ab{border-color:#378ADD;background:#EEF5FD}
-.ropt.ag{border-color:#1A7A6A;background:#F0FAF8}
-.rcirc{width:20px;height:20px;border-radius:50%;border:2px solid #ddd;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;pointer-events:none}
-.rcirc.cb{background:#378ADD;border-color:#378ADD}
-.rcirc.cg{background:#1A7A6A;border-color:#1A7A6A}
-.rcirc svg{display:block}
-.rotl{display:flex;flex-direction:column;gap:2px;pointer-events:none}
-.rott{font-size:14px;font-weight:600;color:#444}.rott.bl{color:#0C447C}.rott.gr{color:#1A7A6A}
-.rotd{font-size:12px;color:#aaa}.rotd.bl{color:#3A6FAD}.rotd.gr{color:#2A9A8A}
-.rprev{font-size:11px;color:#bbb;padding:6px 12px;background:#F5F5F5;border-radius:7px;margin-top:8px;display:none}
-.rbtns{display:flex;gap:8px;margin-bottom:8px;padding-left:130px;flex-wrap:wrap}
-.rbtn{cursor:pointer;padding:6px 14px;border-radius:20px;border:1.5px solid #ddd;background:#F5F5F5;font-size:12px;font-weight:600;color:#666;user-select:none;min-height:36px;touch-action:manipulation}
-.rbtn:hover,.rbtn:active{border-color:#378ADD;color:#0C447C}
-.rbtn.ra{border-color:#378ADD;background:#EEF5FD;color:#0C447C}
-.rcard{border-radius:10px;padding:16px;margin-bottom:12px}
-.rcb{background:#EEF5FD;border:1px solid #B5D4F4}
-.rcg{background:#EAF3DE;border:1px solid #B5D99A}
-.rct{font-size:13px;font-weight:600;margin:0 0 12px}.rcb .rct{color:#0C447C}.rcg .rct{color:#3B6D11}
-.rcgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
-.rmc{background:#fff;border-radius:8px;padding:10px 12px}
-.rml{font-size:11px;color:#888;margin:0 0 4px;line-height:1.3}
-.rmv{font-size:16px;font-weight:700;color:#111;margin:0;padding:0;line-height:1.3}
-.rms{font-size:10px;color:#aaa;margin:3px 0 0}
-.rfc{background:#fff;border-radius:8px;padding:10px 12px}
-.rfl2{font-size:11px;color:#3B6D11;font-weight:600;margin:0 0 4px}
-.rfv{font-size:16px;font-weight:700;color:#3B6D11;margin:0}
-.rfs{font-size:11px;color:#777;margin:3px 0 0;line-height:1.4}
-.rdiv{border:none;border-top:1px solid #EEE;margin:14px 0}
-.rsl{font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin:12px 0 8px}
-.rtw{width:100%;overflow-x:auto}
-.rtw table{width:100%;border-collapse:collapse;font-size:13px}
-.rtw th{font-size:11px;font-weight:600;color:#888;text-align:left;padding:7px 8px;border-bottom:1px solid #ddd;background:#F5F5F5}
-.rtw td{padding:10px 8px;border-bottom:1px solid #F0F0F0;vertical-align:middle;line-height:1.6}
-.rac td{background:#F5F9FF}.rre td{background:#E6F1FB;font-weight:600}.rat td{background:#F0FAF8}.ren td{background:#EAF3DE}
-.rb{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
-.rbb{background:#E6F1FB;color:#0C447C}.rbt{background:#E0F5F0;color:#1A7A6A}.rbg{background:#F0F0F0;color:#666}
-.rok{font-size:11px;font-weight:600;color:#3B6D11;background:#EAF3DE;border-radius:4px;padding:2px 7px}
-.rbd{font-size:13px;font-weight:700;color:#A32D2D;background:#FCEBEB;border-radius:5px;padding:3px 9px;display:inline-block;margin-top:3px}
-.rsc{border-radius:8px;padding:12px 14px;margin-top:12px;font-size:13px;line-height:1.8}
-.rsok{background:#EAF3DE;color:#3B6D11}.rsbad{background:#FCEBEB;color:#A32D2D}
-.rnote{font-size:11px;color:#999;padding:8px 12px;background:#F5F5F5;border-radius:7px;line-height:1.6;margin-top:8px}
-.renc{background:linear-gradient(135deg,#EEF5FD,#EAF3DE);border:1px solid #B5D4F4;border-radius:10px;padding:16px;margin-top:12px;line-height:1.8}
-.renc-title{font-size:15px;font-weight:700;color:#0C447C;margin:0 0 6px}
-.renc-body{font-size:13px;color:#444;margin:0}
-.drow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #EEE;font-size:13px}
-.drow:last-child{border-bottom:none}
-.dlbl{color:#555}.dval{font-weight:700;color:#1A7A6A}
-.dres{border-radius:8px;padding:10px 12px;margin-top:10px;font-size:13px;line-height:1.7}
-.dref{background:#EAF3DE;border:1px solid #B5D99A;border-radius:10px;padding:14px;margin-top:12px;font-size:13px;line-height:1.8;color:#3B6D11}
-.dreft{font-size:14px;font-weight:700;margin:0 0 8px}
-@media print{
-  body{background:#fff;padding:8px}
-  .rapp{max-width:100%}
-  .rbox{break-inside:avoid;box-shadow:none}
-  .rtw{overflow:visible}
-  .rbtn-print{display:none!important}
-}
-.rbtn-print{cursor:pointer;display:block;width:100%;padding:14px;background:#0C447C;color:#fff;font-size:15px;font-weight:700;border:none;border-radius:10px;margin-top:16px;text-align:center;letter-spacing:.03em}
-.rbtn-print:hover{background:#0A3A6A}
+  :root{
+    --paper:#f4efe2;
+    --sheet:#fffdf7;
+    --ink:#1f2b22;
+    --ink-soft:#4d5c4f;
+    --ink-faint:#7c8a7c;
+    --line-faint:#ddd6bf;
+    --line-hair:#e7e1cf;
+    --accent:#b5761f;
+    --accent-ink:#5c3b0e;
+    --series-etf:#1f7fae;
+    --series-boost:#b5761f;
+    --good:#0ca30c;
+    --good-bg:#e1f3e1;
+    --warn:#b5761f;
+    --warn-bg:#f6ecd8;
+    --crit:#c0392f;
+    --crit-bg:#fbe6e2;
+    --shadow: 0 1px 2px rgba(31,43,34,.06), 0 8px 24px rgba(31,43,34,.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1c2420;
+      --sheet:#232f28;
+      --ink:#eef2ec;
+      --ink-soft:#b9c4ba;
+      --ink-faint:#869286;
+      --line-faint:#33413a;
+      --line-hair:#2b362f;
+      --accent:#dba24f;
+      --accent-ink:#2c1e08;
+      --series-etf:#3987e0;
+      --series-boost:#b5761f;
+      --good:#3fc23f;
+      --good-bg:#173420;
+      --warn:#dba24f;
+      --warn-bg:#3a2c12;
+      --crit:#e57468;
+      --crit-bg:#3a1e1a;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1c2420;
+    --sheet:#232f28;
+    --ink:#eef2ec;
+    --ink-soft:#b9c4ba;
+    --ink-faint:#869286;
+    --line-faint:#33413a;
+    --line-hair:#2b362f;
+    --accent:#dba24f;
+    --accent-ink:#2c1e08;
+    --series-etf:#3987e0;
+    --series-boost:#b5761f;
+    --good:#3fc23f;
+    --good-bg:#173420;
+    --warn:#dba24f;
+    --warn-bg:#3a2c12;
+    --crit:#e57468;
+    --crit-bg:#3a1e1a;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","Noto Sans",sans-serif;padding-block:40px;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding-inline:20px;}
+  .eyebrow{font-size:12.5px;letter-spacing:.1em;color:var(--accent-ink);background:color-mix(in srgb, var(--accent) 24%, transparent);display:inline-block;padding:4px 10px;border-radius:999px;font-weight:700;margin-bottom:14px;}
+  h1{font-family:"Noto Serif TC",serif;font-weight:700;font-size:clamp(23px,4.6vw,30px);line-height:1.4;margin:0 0 12px;text-wrap:balance;}
+  .lede{color:var(--ink-soft);font-size:15.5px;line-height:1.85;margin:0 0 30px;max-width:64ch;}
+  .card{background:var(--sheet);border:1px solid var(--line-faint);border-radius:12px;box-shadow:var(--shadow);padding:24px 24px 22px;margin-bottom:20px;}
+  @media (max-width:480px){ .card{padding:18px 16px;} }
+  .card h2{font-family:"Noto Serif TC",serif;font-size:17.5px;font-weight:700;margin:0 0 4px;}
+  .card .card-sub{font-size:13px;color:var(--ink-faint);margin:0 0 18px;line-height:1.6;}
+
+  .input-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:6px;}
+  @media (max-width:480px){ .input-grid{grid-template-columns:1fr;} }
+  .field label{display:block;font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
+  .field .unit-input{display:flex;align-items:center;border:1.5px solid var(--line-faint);border-radius:8px;background:var(--paper);overflow:hidden;}
+  .field .unit-input input{flex:1;min-width:0;border:none;background:transparent;font:600 16px "Noto Sans TC",sans-serif;font-variant-numeric:tabular-nums;padding:10px 10px;color:var(--ink);}
+  .field .unit-input span{padding:0 12px;font-size:13px;color:var(--ink-faint);white-space:nowrap;}
+  .field input:focus{outline:2px solid var(--series-etf);outline-offset:-1px;}
+
+  .slider-row{margin-top:16px;}
+  .slider-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .slider-head .s-label{font-size:13.5px;font-weight:600;color:var(--ink-soft);}
+  .slider-head .s-value{font:700 16px "Noto Sans TC",sans-serif;font-variant-numeric:tabular-nums;color:var(--ink);}
+  input[type="range"]{width:100%;margin:4px 0 2px;}
+  input[type="range"].r-etf{accent-color:var(--series-etf);}
+  input[type="range"].r-boost{accent-color:var(--series-boost);}
+  .slider-note{font-size:12px;color:var(--ink-faint);line-height:1.6;}
+
+  .rate-fixed-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:480px){ .rate-fixed-row{grid-template-columns:1fr;} }
+  .rate-fixed-item{background:var(--paper);border:1.5px solid var(--line-faint);border-radius:10px;padding:14px 16px;}
+  .rate-fixed-item .rf-label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
+  .rate-fixed-item .rf-value{font-family:"Noto Serif TC",serif;font-weight:700;font-size:26px;font-variant-numeric:tabular-nums;}
+  .hl-mark{background:color-mix(in srgb, var(--accent) 45%, transparent);padding:0 2px;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone;font-weight:700;color:var(--ink);}
+
+  .goal-card-input{border:1.5px solid var(--line-faint);border-radius:10px;padding:16px;margin-bottom:14px;background:var(--paper);}
+  .gci-head{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+  .gci-head input[type="text"]{flex:1;min-width:0;font:700 15px "Noto Sans TC",sans-serif;padding:9px 11px;border-radius:6px;border:1.5px solid var(--line-faint);background:var(--sheet);color:var(--ink);}
+  .gci-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .gci-field label{display:block;font-size:11.5px;color:var(--ink-faint);margin-bottom:4px;}
+  .gci-field .unit-input{display:flex;align-items:center;border:1.5px solid var(--line-faint);border-radius:7px;background:var(--sheet);overflow:hidden;}
+  .gci-field .unit-input input{width:100%;min-width:0;border:none;background:transparent;font:600 14.5px "Noto Sans TC",sans-serif;font-variant-numeric:tabular-nums;padding:8px 9px;color:var(--ink);}
+  .gci-field .unit-input span{padding:0 9px;font-size:12px;color:var(--ink-faint);white-space:nowrap;}
+  .g-remove{flex:none;background:none;border:none;color:var(--crit);font-size:19px;line-height:1;cursor:pointer;padding:4px 6px;}
+  .goal-example-tag{font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--ink-faint);background:var(--line-hair);padding:2px 7px;border-radius:999px;flex:none;}
+  .add-goal-btn{font:600 13.5px "Noto Sans TC",sans-serif;padding:10px 14px;border-radius:8px;border:1.5px dashed var(--series-etf);background:transparent;color:var(--series-etf);cursor:pointer;width:100%;margin-top:2px;}
+  .add-goal-btn:hover{background:var(--paper);}
+  .retire-link-note{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line-faint);font-size:12.5px;color:var(--ink-soft);line-height:1.6;}
+  .retire-link-note a{color:var(--series-etf);font-weight:700;text-decoration:none;}
+  .retire-link-note a:hover{text-decoration:underline;}
+  .retire-link-note[hidden]{display:none;}
+
+  .goal-type-toggle{display:flex;gap:6px;margin-bottom:12px;}
+  .type-btn{flex:1;font:600 12px "Noto Sans TC",sans-serif;padding:7px 8px;border-radius:7px;border:1.5px solid var(--line-faint);background:var(--sheet);color:var(--ink-faint);cursor:pointer;}
+  .type-btn:hover{border-color:var(--series-etf);}
+  .type-btn.active{border-color:var(--series-etf);color:var(--series-etf);background:color-mix(in srgb, var(--series-etf) 14%, transparent);font-weight:700;}
+  .preset-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .preset-btn{font:600 12px "Noto Sans TC",sans-serif;padding:6px 12px;border-radius:999px;border:1.5px solid var(--line-faint);background:var(--sheet);color:var(--ink-soft);cursor:pointer;}
+  .preset-btn:hover{border-color:var(--accent);}
+  .preset-btn.active{border-color:var(--accent);color:var(--accent-ink);background:color-mix(in srgb, var(--accent) 20%, transparent);font-weight:700;}
+  .retire-computed{margin-top:12px;padding:10px 12px;border-radius:8px;background:color-mix(in srgb, var(--accent) 14%, transparent);border:1.5px solid var(--accent);font-size:13px;color:var(--ink);line-height:1.6;}
+  .retire-computed b{color:var(--accent-ink);font-size:14.5px;}
+
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:14px;font-size:13px;color:var(--ink-soft);}
+  .legend .lg-item{display:flex;align-items:center;gap:7px;}
+  .legend .sw{width:14px;height:3px;border-radius:2px;display:inline-block;}
+  .legend .sw.gap{width:14px;height:10px;border-radius:2px;opacity:.35;}
+
+  .chart-wrap{position:relative;}
+  svg.chart{width:100%;height:auto;display:block;overflow:visible;}
+  .grid-line{stroke:var(--line-hair);stroke-width:1;}
+  .axis-label{font:11px "Noto Sans TC",sans-serif;font-variant-numeric:tabular-nums;fill:var(--ink-faint);}
+  .goal-guide{stroke:var(--ink-faint);stroke-width:1.3;stroke-dasharray:3 4;}
+  .goal-label{font:600 11px "Noto Sans TC",sans-serif;fill:var(--ink-soft);}
+  .line-etf{fill:none;stroke:var(--series-etf);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+  .line-boost{fill:none;stroke:var(--series-boost);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+  .line-boost.negative{stroke:var(--crit);}
+  .gap-fill{fill:var(--series-boost);opacity:.14;}
+  .gap-fill.negative{fill:var(--crit);opacity:.14;}
+  .hover-dot{fill:var(--sheet);stroke-width:2.5;}
+  .crosshair{stroke:var(--ink-faint);stroke-width:1;stroke-dasharray:2 3;}
+  .tooltip{position:absolute;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:12.5px;line-height:1.6;border-radius:7px;padding:8px 11px;box-shadow:0 6px 18px rgba(0,0,0,.25);white-space:nowrap;opacity:0;transition:opacity .1s;font-variant-numeric:tabular-nums;z-index:5;}
+  .tooltip b{color:var(--sheet);}
+  .overlay-rect{fill:transparent;cursor:crosshair;}
+
+  .goal-results{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
+  .goal-card{border:1.5px solid var(--line-faint);border-radius:10px;padding:14px 16px;}
+  .goal-card-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;flex-wrap:wrap;gap:4px;}
+  .goal-card-head .gname{font-weight:700;font-size:15px;}
+  .goal-card-head .gtarget{font-size:12.5px;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
+  .goal-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media (max-width:480px){ .goal-compare{grid-template-columns:1fr;} }
+  .gc-cell{background:var(--paper);border-radius:8px;padding:10px 12px;}
+  .gc-cell .gc-label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-faint);margin-bottom:4px;}
+  .gc-cell .gc-dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .gc-cell .gc-value{font-weight:700;font-size:16.5px;font-variant-numeric:tabular-nums;}
+  .status-pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;margin-top:6px;}
+  .status-good{background:var(--good-bg);color:var(--good);}
+  .status-crit{background:var(--crit-bg);color:var(--crit);}
+
+  .headline-box{background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 14%, transparent), transparent);border:1.5px solid var(--accent);border-radius:10px;padding:18px 20px;margin-top:18px;}
+  .headline-box p{margin:0;font-size:14.5px;line-height:1.85;color:var(--ink);}
+  .headline-box b{color:var(--accent-ink);}
+  .headline-box .hb-figure{font-family:"Noto Serif TC",serif;font-weight:700;font-size:clamp(20px,4vw,25px);margin:0 0 8px;text-wrap:balance;}
+
+  .disclaimer{font-size:12px;color:var(--ink-faint);line-height:1.8;background:var(--paper);border-radius:8px;padding:12px 14px;margin-top:4px;}
+
+  .cta-card{background:var(--ink);color:var(--sheet);border-radius:12px;padding:24px;text-align:center;}
+  .cta-card h2{font-family:"Noto Serif TC",serif;color:var(--sheet);margin:0 0 8px;font-size:19px;}
+  .cta-card p{color:color-mix(in srgb, var(--sheet) 78%, transparent);font-size:14px;line-height:1.75;margin:0 0 18px;max-width:52ch;margin-inline:auto;}
+  .cta-btn{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:15px;padding:13px 26px;border-radius:8px;text-decoration:none;}
+  .cta-btn:hover{opacity:.92;}
+
+  .footer-note{text-align:center;font-size:12.5px;color:var(--ink-faint);margin-top:18px;line-height:1.7;}
+
+  .gen-link-btn{font:600 13.5px "Noto Sans TC",sans-serif;padding:11px 16px;border-radius:8px;border:1.5px solid var(--accent);background:transparent;color:var(--accent-ink);cursor:pointer;width:100%;}
+  .gen-link-btn:hover{background:color-mix(in srgb, var(--accent) 12%, transparent);}
+  .share-hint{font-size:12px;color:var(--ink-faint);line-height:1.6;margin-top:10px;}
+
+  @media print{
+    body{background:#fff;padding-block:0;}
+    .card{box-shadow:none;border:1px solid #ccc;break-inside:avoid;}
+    .g-remove, .add-goal-btn, .goal-type-toggle, .preset-row, .gen-link-btn, .share-hint,
+    .cta-card, .footer-note, .retire-link-note, .eyebrow{display:none !important;}
+    .goal-card-input, .goal-card{break-inside:avoid;}
+    input{border:none !important;background:transparent !important;}
+    .unit-input{border:none !important;}
+  }
 </style>
 </head>
 <body>
-<div class="rapp">
-<h1>我的退休財務計畫</h1>
-<p class="sub">選擇你現在的狀態，算出退休後每個月有多少錢可以用。</p>
+<div class="wrap">
+  <span class="eyebrow">優優媽咪 · 個股增益試算</span>
+  <h1>自己選股，會贏過大盤，還是輸給大盤？</h1>
+  <p class="lede">輸入你現在的投資狀況和幾個未來要用錢的目標，看看在「大盤10%、大盤＋個股12%」這組假設下，跟「只買大盤ETF」比起來，長期下來差距有多大。下面已經放了示範數字，你可以直接改成自己的。</p>
 
-<div class="rbox">
-  <div class="rhead"><div class="rnum" style="background:#F0F0F0;color:#555;font-size:16px">?</div><span class="rtitle">你現在的狀態是？</span></div>
-  <div style="display:flex;flex-direction:column;gap:8px">
-    <div class="ropt" id="oa"><div class="rcirc" id="ca"></div><div class="rotl"><span class="rott" id="ta">💪 我現在要每個月存錢投資</span><span class="rotd" id="da">每個月固定投資，累積退休金</span></div></div>
-    <div class="ropt" id="od"><div class="rcirc" id="cd"></div><div class="rotl"><span class="rott" id="td">💰 我現在要領股息退休</span><span class="rotd" id="dd">我已經有一筆錢，想靠股息生活</span></div></div>
-  </div>
-</div>
-
-<div id="sa" style="display:none">
-  <div class="rbox">
-    <div class="rhead"><div class="rnum">1</div><span class="rtitle">基本條件</span></div>
-    <div class="rf"><div class="rfrow"><span class="rfl">你今年幾歲？</span><input class="rfi" id="age" type="number" min="20" max="70" placeholder="歲"><span class="rfu">歲</span></div></div>
-    <div class="rf"><div class="rfrow"><span class="rfl">你想幾歲退休？</span><input class="rfi" id="ret" type="number" min="40" max="80" placeholder="歲"><span class="rfu">歲</span></div></div>
-    <div class="rf">
-      <div class="rfrow" style="align-items:flex-start">
-        <span class="rfl" style="padding-top:6px">我需要準備幾份退休金？</span>
-        <div class="ropts">
-          <div class="ropt" id="os1" data-f="1"><div class="rcirc" id="cs1"></div><div class="rotl"><span class="rott" id="ts1">👤 我把自己照顧好就好</span></div></div>
-          <div class="ropt ab" id="os2" data-f="2"><div class="rcirc cb" id="cs2"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rotl"><span class="rott bl" id="ts2">👫 我有另一半，要準備兩份退休金</span></div></div>
-        </div>
+  <div class="card">
+    <h2>① 報酬假設</h2>
+    <p class="card-sub">這兩個假設會套用在下面每一個目標上。</p>
+    <div class="rate-fixed-row">
+      <div class="rate-fixed-item">
+        <span class="rf-label">大盤ETF 預期年化報酬</span>
+        <span class="rf-value" style="color:var(--series-etf)">10%</span>
+      </div>
+      <div class="rate-fixed-item">
+        <span class="rf-label">大盤＋自選個股 預期年化報酬</span>
+        <span class="rf-value" style="color:var(--series-boost)">12%</span>
       </div>
     </div>
-    <div class="rf"><div class="rfrow"><span class="rfl">每人每月生活費是多少？</span><input class="rfi" id="exp" type="number" min="0.1" max="30" step="0.1" placeholder="萬"><span class="rfu">萬台幣</span></div><div class="rfh" id="exph">填退休後每月生活開銷，以現在的購買力計算。</div></div>
-  </div>
-  <div class="rbox">
-    <div class="rhead"><div class="rnum">2</div><span class="rtitle">投資條件</span></div>
-    <div class="rf"><div class="rfrow"><span class="rfl">我目前有多少本金？</span><input class="rfi" id="pri" type="number" min="0" placeholder="0"><span class="rfuw">萬台幣</span></div><div class="rph">⚠️ 單位是「萬」——有 100 萬請填 100</div></div>
-    <div class="rf"><div class="rfrow"><span class="rfl">我每個月投多少？</span><input class="rfi" id="mon" type="number" min="0" step="1000" placeholder="元"><span class="rfu">元台幣</span></div></div>
-    <div class="rf"><div class="rfrow"><span class="rfl">加薪後每個月多存多少？</span><input class="rfi" id="inc" type="number" min="0" step="500" placeholder="0"><span class="rfu">元台幣</span></div><div class="rfh" id="inch">每年加薪後多存多少，沒有加薪填 0。</div></div>
-    <div class="rf"><div class="rfrow"><span class="rfl">每個月最多投資多少錢？</span><input class="rfi" id="mxm" type="number" min="0" step="1000" placeholder="元"><span class="rfu">元台幣</span></div><div class="rfh" id="mxh">加薪後最多每月存多少，超過的留給生活用。</div><div class="rwn" id="wrn"></div></div>
-    <div class="rprev" id="prv"></div>
-    <div class="rf" style="margin-top:12px">
-      <div class="rfrow"><span class="rfl">預期年化報酬</span><input class="rfi" id="gr" type="number" min="1" max="30" step="0.5" placeholder="%"><span class="rfu">%</span></div>
-      <div class="rbtns"><div class="rbtn" id="rb6">保守 6%</div><div class="rbtn" id="rb8">穩健 8%</div><div class="rbtn" id="rb12">積極 12%</div></div>
-      <div class="rfh">長期平均報酬，不代表每年固定達到。</div>
-    </div>
+    <div class="slider-note" style="margin-top:12px"><b style="color:var(--ink)">非市場預測。</b><span class="hl-mark">長期投資10年以上</span>，納入自選個股的年化報酬率有機會高於大盤——這是一組假設情境，用來看複利長期下來的差距，不是保證會發生的報酬，實際結果可能優於或劣於這個假設。</div>
   </div>
 
-  <div class="rbox">
-    <div class="rhead"><div class="rnum">3</div><span class="rtitle">我的退休計畫</span></div>
-    <div class="rcard rcb">
-      <p class="rct">📊 退休那一天</p>
-      <div class="rcgrid">
-        <div class="rmc"><p class="rml">退休年齡</p><p class="rmv" id="rra">—</p></div>
-        <div class="rmc"><p class="rml">預估總資產</p><p class="rmv" id="rto">—</p></div>
-        <div class="rmc"><p class="rml">每月可以花多少</p><p class="rmv" id="rsp">—</p><p class="rms">以現在的錢來看</p></div>
-        <div class="rmc"><p class="rml">夠不夠用？</p><p class="rmv" id="rst">—</p></div>
-      </div>
-    </div>
-    <div class="rcard rcg" id="flx" style="display:none">
-      <p class="rct">🎉 你還有更多彈性！</p>
-      <div class="rcgrid">
-        <div class="rfc"><p class="rfl2">🕐 可以提早退休</p><p class="rfv" id="fe">—</p><p class="rfs" id="fes"></p></div>
-        <div class="rfc"><p class="rfl2">💸 可以提高生活費</p><p class="rfv" id="fx">—</p><p class="rfs" id="fxs"></p></div>
-      </div>
-    </div>
-    <div class="rdiv"></div>
-    <p class="rsl">完整人生時間軸</p>
-    <div class="rtw"><table><thead id="th"></thead><tbody id="tb"></tbody></table></div>
-    <div class="rnote" id="tn"></div>
-    <div class="rsc" id="sc" style="display:none"></div>
-    <div class="renc" id="enc" style="display:none">
-      <p class="renc-title">🎯 先存到足夠的本金，之後怎麼領是你的自由。</p>
-      <p class="renc-body">要 4% 提領、要換股息股領配息、要兩個混著用——都可以。<br>來上課，我們一起規劃最適合你的退休方式。</p>
-    </div>
+  <div class="card">
+    <h2>② 你的目標清單</h2>
+    <p class="card-sub">下面是範例，改成你自己的目標。<b style="color:var(--ink)">每個目標要分開填自己的本金和月存</b>——如果你手上只有一筆錢、每月只存得出一筆錢，記得把它拆開分給不同目標，不要在兩個目標都填一樣的金額，那樣等於把同一筆錢重複算了兩次。退休金目標可以切換成「幫我算退休金目標」，不用自己先猜要存多少。</p>
+    <div id="goalList"></div>
+    <button type="button" class="add-goal-btn" id="addGoal">＋ 新增一個目標</button>
   </div>
-</div>
 
-<div id="sd" style="display:none">
-  <div class="rbox">
-    <div class="rhead"><div class="rnumg">1</div><span class="rtitle">你現在有多少錢？</span></div>
-    <div class="rf"><div class="rfrow"><span class="rfl">現有總資產</span><input class="rfi" id="dp" type="number" min="0" placeholder="0"><span class="rfuw">萬台幣</span></div><div class="rph">⚠️ 單位是「萬」——有 1,000 萬請填 1000</div></div>
-    <div class="rf"><div class="rfrow"><span class="rfl">每人每月生活費</span><input class="rfi" id="de" type="number" min="0.1" max="30" step="0.1" placeholder="萬"><span class="rfu">萬台幣</span></div></div>
-    <div class="rf">
-      <div class="rfrow" style="align-items:flex-start">
-        <span class="rfl" style="padding-top:6px">家庭組合</span>
-        <div class="ropts">
-          <div class="ropt" id="ds1" data-f="1"><div class="rcirc" id="dc1"></div><div class="rotl"><span class="rott" id="dt1">👤 單身</span></div></div>
-          <div class="ropt ag" id="ds2" data-f="2"><div class="rcirc cg" id="dc2"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rotl"><span class="rott gr" id="dt2">👫 夫妻兩人</span></div></div>
-        </div>
-      </div>
+  <div class="card">
+    <h2>③ 兩種情境，差距在哪裡</h2>
+    <p class="card-sub">每個目標分開試算，用的是這個目標自己填的本金和月存。實線是預估的資產成長曲線。</p>
+    <div class="legend">
+      <span class="lg-item"><span class="sw" style="background:var(--series-etf)"></span>只買大盤ETF</span>
+      <span class="lg-item"><span class="sw" style="background:var(--series-boost)" id="legendBoostSw"></span>大盤＋自選個股</span>
+      <span class="lg-item"><span class="sw gap" style="background:var(--series-boost)" id="legendGapSw"></span>選股帶來的差距（可能是收穫，也可能是損失）</span>
     </div>
+    <div class="goal-results" id="goalResults"></div>
+    <div class="headline-box" id="headlineBox"></div>
+    <div class="disclaimer">「大盤＋個股12%」是一組假設情境，不是市場預測，也不是對你的個股一定會賺這麼多的保證——它反映的是「長期投資10年以上，納入自選個股，年化報酬有機會高於大盤」這個常見觀察，用來讓你看看複利在長時間下會放大出多大的差距。個股投資的風險與研究門檻都比大盤ETF更高，實際報酬可能優於或劣於這個假設，請依自己的風險承受度審慎評估，本工具不構成投資建議。</div>
   </div>
-  <div class="rbox">
-    <div class="rhead"><div class="rnumg">2</div><span class="rtitle">股息試算結果</span></div>
-    <div style="background:#F5F5F5;border-radius:8px;padding:12px 14px">
-      <div class="drow"><span class="dlbl">每年股息收入（4% 殖利率）</span><span class="dval" id="da1">—</span></div>
-      <div class="drow"><span class="dlbl">現在每月可以領</span><span class="dval" id="da2">—</span></div>
-      <div class="drow"><span class="dlbl">5年後每月（3% 股息成長）</span><span class="dval" id="da3">—</span></div>
-      <div class="drow"><span class="dlbl">10年後每月</span><span class="dval" id="da4">—</span></div>
-    </div>
-    <div class="dres" id="dres" style="display:none"><span id="dvd"></span></div>
-    <div class="dref">
-      <p class="dreft">📋 想進一步規劃？</p>
-      <p style="margin:0">股息退休還需要考慮資產配置、遺產稅規劃等細節。我認識一位專業的資產規劃師，可以幫你量身規劃。<br><br>有興趣的話，歡迎聯絡我了解更多！</p>
-    </div>
+
+  <div class="card">
+    <h2>④ 下載這次的試算結果</h2>
+    <p class="card-sub">把目前畫面存成PDF，方便自己留底、列印，或傳給別人看。</p>
+    <button type="button" class="gen-link-btn" id="downloadPdfBtn">下載 PDF</button>
+    <p class="share-hint" id="pdfHint">按下後會開啟瀏覽器的列印視窗，把「印表機」選成「另存為PDF」就可以下載。</p>
   </div>
-</div>
+
+  <div class="cta-card">
+    <h2>想知道怎麼提高選股的勝算嗎？</h2>
+    <p>我做了一個課程，給不喜歡盯盤，但想靠選股提高勝算的人。這堂課叫『低焦慮投資法』，除了買大盤，也買厲害的個股，適合長期投資、買了就放著的人學習——優優幫你整理資料，看懂自己投資的公司。</p>
+    <a class="cta-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScqw2ddBTnrtwa7NlURSAVDTajgk8qY8LkesAqq5bL4re3nWw/viewform?usp=header" id="ctaLink" target="_blank" rel="noopener noreferrer">點我報名『低焦慮投資法』</a>
+  </div>
+  <p class="footer-note">優優媽咪・給投資新手的美股入門課</p>
 </div>
 
 <script>
 (function(){
-  var fam=2,dfam=2,WR=0.04,RG=0.10,INF=0.04,END=90;
-  var svgW='<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  function g(id){return document.getElementById(id);}
-  function v(id,d){var el=g(id);if(!el)return d;var n=parseFloat(el.value);return isNaN(n)?d:n;}
-  function fmt(w){if(w>=100000)return(w/100000).toFixed(2)+' 百億';if(w>=10000)return(w/10000).toFixed(2)+' 億';if(w<=0)return'0 萬';return Math.round(w).toLocaleString()+' 萬';}
-  function fmtM(n){return Math.abs(n)>=10000?(n/10000).toFixed(1)+' 萬':Math.round(n).toLocaleString()+' 元';}
-  function fmtPP(pp,f){var per=Math.round(pp/f*10)/10,tot=Math.round(per*f*10)/10;return f===2?'每人 <strong>'+per.toFixed(1)+' 萬</strong>，合計 <strong>'+tot.toFixed(1)+' 萬</strong>':'<strong>'+per.toFixed(1)+' 萬</strong>';}
-  function gapStr(gap,f){return f===2?'每個月兩人共差 <strong>'+gap.toFixed(1)+' 萬</strong>':'每個月差 <strong>'+gap.toFixed(1)+' 萬</strong>';}
-  function setMode(m){
-    var isA=(m==='a');
-    if(isA){g('oa').className='ropt ab';g('ca').className='rcirc cb';g('ca').innerHTML=svgW;g('ta').className='rott bl';g('da').className='rotd bl';g('od').className='ropt';g('cd').className='rcirc';g('cd').innerHTML='';g('td').className='rott';g('dd').className='rotd';}
-    else{g('od').className='ropt ag';g('cd').className='rcirc cg';g('cd').innerHTML=svgW;g('td').className='rott gr';g('dd').className='rotd gr';g('oa').className='ropt';g('ca').className='rcirc';g('ca').innerHTML='';g('ta').className='rott';g('da').className='rotd';}
-    g('sa').style.display=isA?'':'none';g('sd').style.display=isA?'none':'';
+  "use strict";
+  var fmtWan = function(n){
+    var w = n/10000;
+    if (Math.abs(w) >= 1000) return (w/1000).toFixed(1)+'千萬';
+    return Math.round(w).toLocaleString('zh-Hant-TW')+'萬';
+  };
+
+  var state = {
+    etfRate: 10,
+    boost: 2,
+    goals: [
+      {id:1, name:'孩子的學費', type:'simple', amount:600000, years:8, principal:50000, monthly:3000, example:true},
+      {id:2, name:'退休金', type:'retire', currentAge:35, retireAge:60, retireExpense:50000, inflation:3, principal:150000, monthly:7000, example:true}
+    ],
+    nextId: 3
+  };
+
+  function fv(principal, annualContribution, ratePct, years){
+    var r = ratePct/100;
+    if (years <= 0) return principal;
+    if (r === 0) return principal + annualContribution*years;
+    var growth = Math.pow(1+r, years);
+    return principal*growth + annualContribution*((growth-1)/r);
   }
-  function setFam(n){fam=n;
-    if(n===1){g('os1').className='ropt ab';g('cs1').className='rcirc cb';g('cs1').innerHTML=svgW;g('ts1').className='rott bl';g('ds1').className='rotd bl';g('os2').className='ropt';g('cs2').className='rcirc';g('cs2').innerHTML='';g('ts2').className='rott';g('ds2').className='rotd';}
-    else{g('os2').className='ropt ab';g('cs2').className='rcirc cb';g('cs2').innerHTML=svgW;g('ts2').className='rott bl';g('ds2').className='rotd bl';g('os1').className='ropt';g('cs1').className='rcirc';g('cs1').innerHTML='';g('ts1').className='rott';g('ds1').className='rotd';}
-    updEH();calc();
+
+  /* ---------------- retirement target math (mirrors 優優的退休規劃表's core "4%法則": 目標金額 = 通膨調整後年支出 ÷ 4%) ---------------- */
+  var RETIRE_WITHDRAW_RATE = 0.04;
+  function goalYears(g){
+    if (g.type==='retire') return Math.max(1, (Number(g.retireAge)||0) - (Number(g.currentAge)||0));
+    return g.years;
   }
-  function setDFam(n){dfam=n;
-    if(n===1){g('ds1').className='ropt ag';g('dc1').className='rcirc cg';g('dc1').innerHTML=svgW;g('dt1').className='rott gr';g('ds2').className='ropt';g('dc2').className='rcirc';g('dc2').innerHTML='';g('dt2').className='rott';}
-    else{g('ds2').className='ropt ag';g('dc2').className='rcirc cg';g('dc2').innerHTML=svgW;g('dt2').className='rott gr';g('ds1').className='ropt';g('dc1').className='rcirc';g('dc1').innerHTML='';g('dt1').className='rott';}
-    calcDiv();
+  function goalAmount(g){
+    if (g.type==='retire'){
+      var yrs = goalYears(g);
+      var inf = (Number(g.inflation)||0)/100;
+      var expense = Number(g.retireExpense)||0;
+      return expense * 12 * Math.pow(1+inf, yrs) / RETIRE_WITHDRAW_RATE;
+    }
+    return g.amount;
   }
-  function updEH(){var e=v('exp',0),h=g('exph');if(!h)return;if(!e){h.textContent='填退休後每月生活開銷，以現在的購買力計算。';return;}h.textContent=fam===2?'夫妻兩人合計每月 '+(e*2).toFixed(1)+' 萬台幣。':'單身每月 '+e.toFixed(1)+' 萬台幣。';}
-  function updIH(){
-    var m=v('mon',0),i=v('inc',0),mx=v('mxm',0),h=g('inch');if(!h)return;
-    if(!i||i<=0){h.textContent='每年加薪後多存多少，沒有加薪填 0。';return;}
-    var y1=m,y2=Math.min(m+i,mx||999999),y3=Math.min(m+i*2,mx||999999);
-    h.textContent='第1年每月存 '+fmtM(y1)+'，第2年存 '+fmtM(y2)+'，第3年存 '+fmtM(y3)+'……每年多存 '+fmtM(i)+'。';
+
+  /* ---------------- goal list UI ---------------- */
+  var goalList = document.getElementById('goalList');
+  var RETIRE_PLAN_URL = 'https://yoyomammy.github.io/retire-plan/';
+  function isRetireGoal(name){ return /退休/.test(name||''); }
+  function retireComputedHtml(g){
+    return '已把通膨 <b>'+(Number(g.inflation)||0)+'%</b> 納入考量，試算後您退休需準備 <b>'+fmtWan(goalAmount(g))+'</b>。';
   }
-  function updMH(){var m=v('mon',0),i=v('inc',0),mx=v('mxm',0),h=g('mxh');if(!h)return;if(!mx){h.textContent='加薪後最多每月存多少，超過的留給生活用。';return;}h.textContent=i>0&&m>0?'每月從 '+fmtM(m)+' 開始，加薪後多存 '+fmtM(i)+'，最多存到 '+fmtM(mx)+' 就好。':'每月固定存 '+fmtM(m||mx)+'。';}
-  function chkW(){var m=v('mon',0),mx=v('mxm',0),w=g('wrn');if(!w)return;if(mx>0&&mx<m){w.style.display='block';w.textContent='⚠️ 每月投入上限（'+fmtM(mx)+'）比現在每月投入（'+fmtM(m)+'）還低，請把上限調高。';}else w.style.display='none';}
-  function accum(p,m,i,mx,gr,yrs){var gs=p||0;for(var y=1;y<=yrs;y++){var cm=m;if(i>0)cm=mx>0?Math.min(m+i*(y-1),mx):m+i*(y-1);gs=gs*(1+gr)+cm*12/10000;}return gs;}
-  function setRate(r){var inp=g('gr');if(inp)inp.value=r;[6,8,12].forEach(function(x){var b=g('rb'+x);if(b)b.className='rbtn'+(x===r?' ra':'');});calc();}
-  function syncR(){var c=v('gr',0);[6,8,12].forEach(function(x){var b=g('rb'+x);if(b)b.className='rbtn'+(x===c?' ra':'');});}
-  function calcDiv(){
-    var p=v('dp',0),e=v('de',0);
-    if(!p){['da1','da2','da3','da4'].forEach(function(id){var el=g(id);if(el)el.textContent='—';});g('dres').style.display='none';return;}
-    var ann=p*0.04,mon=ann/12,m5=p*0.04*Math.pow(1.03,5)/12,m10=p*0.04*Math.pow(1.03,10)/12;
-    g('da1').textContent=ann.toFixed(1)+' 萬';
-    g('da2').innerHTML=fmtPP(mon,dfam);g('da3').innerHTML=fmtPP(m5,dfam);g('da4').innerHTML=fmtPP(m10,dfam);
-    if(e>0){
-      var need=e*dfam,dr=g('dres'),dv=g('dvd');dr.style.display='';
-      if(mon>=need){dv.innerHTML='<span style="color:#1A7A6A;font-weight:700">✓ 現在的資產已足夠靠股息退休！</span>每月股息已超過生活目標。';dr.style.cssText='background:#F0FAF8;border:1px solid #A8DDD0;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:13px;line-height:1.7';}
-      else{var gap=need-mon;dv.innerHTML='目前每月股息還差 <strong>'+(gap/dfam).toFixed(1)+' 萬/人</strong>（合計差 <strong>'+gap.toFixed(1)+' 萬</strong>）才能達到生活目標。';dr.style.cssText='background:#FFFBF0;border:1px solid #E8D9A0;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:13px;line-height:1.7';}
-    }else g('dres').style.display='none';
+  function goalRowHtml(g){
+    var isRetire = g.type==='retire';
+    var head = '<div class="goal-card-input" data-id="'+g.id+'">'+
+      '<div class="gci-head">'+
+        (g.example ? '<span class="goal-example-tag">範例</span>' : '')+
+        '<input type="text" class="g-name" placeholder="目標名稱，例如：孩子的學費" value="'+(g.name||'').replace(/"/g,'&quot;')+'">'+
+        '<button type="button" class="g-remove" aria-label="刪除目標">×</button>'+
+      '</div>'+
+      '<div class="goal-type-toggle">'+
+        '<button type="button" class="type-btn'+(!isRetire?' active':'')+'" data-type="simple">直接填目標金額</button>'+
+        '<button type="button" class="type-btn'+(isRetire?' active':'')+'" data-type="retire">幫我算退休金目標</button>'+
+      '</div>';
+
+    var body;
+    if (isRetire){
+      body =
+        '<div class="gci-grid">'+
+          '<div class="gci-field"><label>現在幾歲</label><div class="unit-input"><input type="number" class="g-currentAge" min="18" max="80" value="'+(g.currentAge||0)+'"><span>歲</span></div></div>'+
+          '<div class="gci-field"><label>想幾歲退休</label><div class="unit-input"><input type="number" class="g-retireAge" min="30" max="90" value="'+(g.retireAge||0)+'"><span>歲</span></div></div>'+
+          '<div class="gci-field"><label>目前已為退休存了</label><div class="unit-input"><input type="number" class="g-principal" min="0" step="1" value="'+(g.principal/10000)+'"><span>萬元</span></div></div>'+
+          '<div class="gci-field"><label>每月再為它存</label><div class="unit-input"><input type="number" class="g-monthly" min="0" step="500" value="'+g.monthly+'"><span>元／月</span></div></div>'+
+        '</div>'+
+        '<div class="gci-field" style="margin-top:10px"><label>退休後每月想花多少（用現在的錢計算；有伴侶請填兩人合計）</label><div class="unit-input"><input type="number" class="g-retireExpense" min="0" step="1000" value="'+(g.retireExpense||0)+'"><span>元／月</span></div></div>'+
+        '<div class="preset-row" style="margin-top:10px">'+
+          '<span style="font-size:12px;color:var(--ink-faint)">通膨假設：</span>'+
+          [4,3,2].map(function(r){ return '<button type="button" class="preset-btn inf-btn'+(Number(g.inflation)===r?' active':'')+'" data-inf="'+r+'">'+(r===4?'保守 4%':r===3?'一般 3%':'樂觀 2%')+'</button>'; }).join('')+
+        '</div>'+
+        '<div class="retire-computed">'+retireComputedHtml(g)+'</div>';
+    } else {
+      body =
+        '<div class="gci-grid">'+
+          '<div class="gci-field"><label>目標金額</label><div class="unit-input"><input type="number" class="g-amount" min="0" step="1" value="'+(g.amount/10000)+'"><span>萬元</span></div></div>'+
+          '<div class="gci-field"><label>幾年後需要</label><div class="unit-input"><input type="number" class="g-years" min="1" max="50" value="'+g.years+'"><span>年後</span></div></div>'+
+          '<div class="gci-field"><label>目前已為這個目標存了</label><div class="unit-input"><input type="number" class="g-principal" min="0" step="1" value="'+(g.principal/10000)+'"><span>萬元</span></div></div>'+
+          '<div class="gci-field"><label>每月再為它存</label><div class="unit-input"><input type="number" class="g-monthly" min="0" step="500" value="'+g.monthly+'"><span>元／月</span></div></div>'+
+        '</div>';
+    }
+
+    var retireLink = '<div class="retire-link-note"'+(isRetireGoal(g.name)?'':' hidden')+'>還想算得更細（勞退、逐年增加存款、夫妻分開試算）？可以用<a href="'+RETIRE_PLAN_URL+'" target="_blank" rel="noopener noreferrer">優優的退休規劃表</a>做更完整的試算。</div>';
+
+    return head + body + retireLink + '</div>';
   }
-  function calc(){
-    var age=v('age',0),ew=v('exp',0),p=v('pri',0),m=v('mon',0),inc=v('inc',0),mx=v('mxm',999999),gr=v('gr',0)/100,ret=v('ret',0);
-    var prv=g('prv');
-    if(m>0&&gr>0&&ret>age){var rmx=inc>0&&mx<999999?Math.ceil((mx-m)/inc):999;prv.style.display='';prv.textContent=inc>0?'投入預覽：第1年每月 '+fmtM(m)+' → 第'+Math.min(rmx,10)+'年每月 '+fmtM(Math.min(m+inc*(Math.min(rmx,10)-1),mx)):'每月固定投入 '+fmtM(m);}else prv.style.display='none';
-    updMH();chkW();updEH();updIH();
-    if(!age||!ret||!gr||ret<=age){['rra','rto','rsp','rst'].forEach(function(id){var el=g(id);if(el)el.innerHTML='—';});g('flx').style.display='none';g('tb').innerHTML='';g('sc').style.display='none';g('enc').style.display='none';return;}
-    var yrs=ret-age,gs=accum(p,m,inc,mx,gr,yrs);
-    var ppR=gs*WR/12/Math.pow(1+INF,yrs),tP=ew*fam,tA=ew>0?tP*Math.pow(1+INF,yrs)*12/WR:0,ok=tA>0&&gs>=tA;
-    g('rra').textContent=ret+' 歲';g('rto').textContent=fmt(gs);
-    g('rsp').innerHTML=ew>0?fmtPP(ppR,fam):'填入生活費後計算';
-    if(!ew)g('rst').textContent='填入生活費後計算';
-    else if(ok)g('rst').innerHTML='<span class="rok">✓ 夠用</span>';
-    else{var gap=tP-ppR;g('rst').innerHTML='<span class="rbd">'+gapStr(gap,fam)+'</span>';}
-    var fc=g('flx');
-    if(ok){fc.style.display='';var ear=null;for(var a=age+1;a<=ret;a++){var g2=accum(p,m,inc,mx,gr,a-age),t=ew*fam*Math.pow(1+INF,a-age)*12/WR;if(g2>=t){ear=a;break;}}
-      g('fe').textContent=ear?ear+' 歲':'已是最早';g('fes').textContent=ear&&ear<ret?'比原計畫提早 '+(ret-ear)+' 年':'';
-      var me=gs*WR/12/Math.pow(1+INF,yrs)/fam;g('fx').textContent=me.toFixed(1)+' 萬／人';g('fxs').textContent=me>ew?'比現在多 '+(me-ew).toFixed(1)+' 萬可花':'';
-    }else fc.style.display='none';
-    buildTL(age,ret,p,m,inc,mx,gr,gs,ppR,tP,yrs,ok,ew);
+  function refreshRetireComputed(row, g){
+    var el = row.querySelector('.retire-computed');
+    if (el) el.innerHTML = retireComputedHtml(g);
   }
-  function buildTL(age,ret,p,m,inc,mx,gr,gs,ppR,tP,yrs,ok,ew){
-    g('th').innerHTML='<tr><th>年齡</th><th>階段</th><th>資產與每月可花</th></tr>';
-    var tb=g('tb');tb.innerHTML='';
-    for(var a=age;a<ret;a+=5){var g2=accum(p,m,inc,mx,gr,a-age);var tr=document.createElement('tr');tr.className='rac';tr.innerHTML='<td><strong>'+a+' 歲</strong></td><td><span class="rb rbb">累積中</span></td><td>'+fmt(g2)+'</td>';tb.appendChild(tr);}
-    var tr0=document.createElement('tr');tr0.className='rre';tr0.innerHTML='<td><strong>'+ret+' 歲</strong></td><td><span class="rb rbt">退休</span></td><td>總資產 '+fmt(gs)+'</td>';tb.appendChild(tr0);
-    var pts=[];for(var a=ret+5;a<=END;a+=5)pts.push(a);if(pts.indexOf(END)===-1)pts.push(END);
-    pts.forEach(function(a){
-      var ya=a-ret,asset=gs;for(var y=1;y<=ya;y++)asset=(asset-asset*WR)*(1+RG);
-      var pp=asset*WR/12/Math.pow(1+INF,yrs+ya),isEnd=(a===END);
-      var tr=document.createElement('tr');tr.className=isEnd?'ren':'rat';
-      var badge=isEnd?'<span class="rb rbg">90歲</span>':'<span class="rb rbt">退休中</span>';
-      var tag='';
-      if(ew>0){if(pp>=tP)tag=' <span class="rok">✓ 夠</span>';else tag='<br><span class="rbd">'+gapStr(tP-pp,fam)+'</span>';}
-      tr.innerHTML='<td><strong>'+a+' 歲</strong></td><td>'+badge+'</td><td>總資產 '+fmt(asset)+'<br><span style="font-size:12px;color:#555">每月可花 '+fmtPP(pp,fam)+'</span>'+tag+'</td>';
-      tb.appendChild(tr);
+  function renderGoalList(){
+    goalList.innerHTML = state.goals.map(goalRowHtml).join('');
+    Array.prototype.forEach.call(goalList.querySelectorAll('.goal-card-input'), function(row){
+      var id = Number(row.dataset.id);
+      var g = state.goals.find(function(x){ return x.id===id; });
+
+      row.querySelector('.g-name').addEventListener('input', function(e){
+        g.name = e.target.value; g.example=false;
+        var note = row.querySelector('.retire-link-note');
+        if (note) note.hidden = !isRetireGoal(g.name);
+        renderAll(false);
+      });
+      row.querySelector('.g-remove').addEventListener('click', function(){ state.goals = state.goals.filter(function(x){ return x.id!==id; }); renderGoalList(); renderAll(false); });
+      Array.prototype.forEach.call(row.querySelectorAll('.type-btn'), function(btn){
+        btn.addEventListener('click', function(){
+          var newType = btn.dataset.type;
+          if (g.type === newType) return;
+          if (newType === 'retire'){
+            g.type = 'retire';
+            if (g.currentAge==null) g.currentAge = 35;
+            if (g.retireAge==null) g.retireAge = 60;
+            if (g.retireExpense==null) g.retireExpense = 50000;
+            if (g.inflation==null) g.inflation = 3;
+          } else {
+            g.amount = Math.round(goalAmount(g)/1000)*1000;
+            g.years = Math.round(goalYears(g));
+            g.type = 'simple';
+          }
+          g.example = false;
+          renderGoalList();
+          renderAll(false);
+        });
+      });
+
+      if (g.type==='retire'){
+        row.querySelector('.g-currentAge').addEventListener('input', function(e){ g.currentAge = Math.max(0, Number(e.target.value)||0); g.example=false; refreshRetireComputed(row,g); renderAll(false); });
+        row.querySelector('.g-retireAge').addEventListener('input', function(e){ g.retireAge = Math.max(0, Number(e.target.value)||0); g.example=false; refreshRetireComputed(row,g); renderAll(false); });
+        row.querySelector('.g-retireExpense').addEventListener('input', function(e){ g.retireExpense = Math.max(0, Number(e.target.value)||0); g.example=false; refreshRetireComputed(row,g); renderAll(false); });
+        Array.prototype.forEach.call(row.querySelectorAll('.inf-btn'), function(btn){
+          btn.addEventListener('click', function(){
+            g.inflation = Number(btn.dataset.inf);
+            g.example = false;
+            Array.prototype.forEach.call(row.querySelectorAll('.inf-btn'), function(b2){ b2.classList.toggle('active', Number(b2.dataset.inf)===g.inflation); });
+            refreshRetireComputed(row, g);
+            renderAll(false);
+          });
+        });
+        row.querySelector('.g-principal').addEventListener('input', function(e){ g.principal = Math.max(0, Number(e.target.value)||0)*10000; g.example=false; renderAll(false); });
+        row.querySelector('.g-monthly').addEventListener('input', function(e){ g.monthly = Math.max(0, Number(e.target.value)||0); g.example=false; renderAll(false); });
+      } else {
+        row.querySelector('.g-amount').addEventListener('input', function(e){ g.amount = Math.max(0, Number(e.target.value)||0)*10000; g.example=false; renderAll(false); });
+        row.querySelector('.g-years').addEventListener('input', function(e){ g.years = Math.max(1, Number(e.target.value)||1); g.example=false; renderAll(false); });
+        row.querySelector('.g-principal').addEventListener('input', function(e){ g.principal = Math.max(0, Number(e.target.value)||0)*10000; g.example=false; renderAll(false); });
+        row.querySelector('.g-monthly').addEventListener('input', function(e){ g.monthly = Math.max(0, Number(e.target.value)||0); g.example=false; renderAll(false); });
+      }
     });
-    g('tn').innerHTML='💡 這裡的數字已考量每年 4% 通膨，用現在的物價換算，方便你對照現在的生活費。';
-    var sc=g('sc'),enc=g('enc');
-    if(!ew){sc.style.display='none';enc.style.display='none';return;}
-    sc.style.display='';enc.style.display='';
-    if(ok){sc.className='rsc rsok';sc.textContent=ret+'歲退休，錢夠用，而且越來越多！';}
-    else{var gap=tP-ppR;sc.className='rsc rsbad';sc.innerHTML='以目前的計畫，退休後'+gapStr(gap,fam)+'。<br><br>💡 可以調整的方向：<br>1. 增加每月投入，或提高初始本金<br>2. 延後退休年齡，讓資產多複利幾年<br>3. 降低退休後的生活費';}
   }
-  function bindOpt(id,cb){var el=g(id);if(!el)return;el.addEventListener('click',cb);el.addEventListener('touchend',function(e){e.preventDefault();cb();});}
+  document.getElementById('addGoal').addEventListener('click', function(){
+    state.goals.push({id: state.nextId++, name:'', type:'simple', amount:100000, years:5, principal:0, monthly:1000, example:false});
+    renderGoalList();
+    var rows = goalList.querySelectorAll('.goal-card-input');
+    rows[rows.length-1].querySelector('.g-name').focus();
+    renderAll(false);
+  });
 
-  // 會不會繼續存錢
-  var willSave=true;
-  function setSave(yes){
-    willSave=yes;
-    var svgW2='<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    var oy=g('osave-y'),on_=g('osave-n'),cy=g('csave-y'),cn=g('csave-n'),ss=g('save-section');
-    if(!oy||!on_||!cy||!cn||!ss)return;
-    if(yes){
-      oy.className='ropt ab';cy.className='rcirc cb';cy.innerHTML=svgW2;
-      on_.className='ropt';cn.className='rcirc';cn.innerHTML='';
-      ss.style.display='';
-    }else{
-      on_.className='ropt ab';cn.className='rcirc cb';cn.innerHTML=svgW2;
-      oy.className='ropt';cy.className='rcirc';cy.innerHTML='';
-      ss.style.display='none';
-      var mon=g('mon');if(mon)mon.value='';
+  /* ---------------- rate assumptions (fixed, not user-adjustable) ---------------- */
+  function fmtSigned(n){ return (n>0?'+':'')+n+'%'; }
+
+  /* ---------------- per-goal chart (small multiples: each goal has its own principal/monthly/scale) ---------------- */
+  var W = 560, H = 190, PAD_L = 52, PAD_R = 14, PAD_T = 16, PAD_B = 30;
+
+  function niceMax(v){
+    if (v <= 0) return 100000;
+    var mag = Math.pow(10, Math.floor(Math.log10(v)));
+    var n = v/mag;
+    var step = n<=1?1:n<=2?2:n<=5?5:10;
+    return step*mag;
+  }
+
+  function buildGoalChart(g, wrapEl){
+    var goalAmt = goalAmount(g);
+    var maxYears = Math.max(goalYears(g), 1);
+    var years = []; for (var y=0;y<=maxYears;y++) years.push(y);
+    var annualContribution = g.monthly*12;
+    var etfSeries = years.map(function(y){ return fv(g.principal, annualContribution, state.etfRate, y); });
+    var boostSeries = years.map(function(y){ return fv(g.principal, annualContribution, state.etfRate+state.boost, y); });
+    var maxVal = niceMax(Math.max(etfSeries[etfSeries.length-1], boostSeries[boostSeries.length-1], goalAmt) * 1.1);
+
+    function X(y){ return PAD_L + (y/maxYears) * (W-PAD_L-PAD_R); }
+    function Y(v){ return H-PAD_B - (v/maxVal) * (H-PAD_T-PAD_B); }
+
+    var gridCount = 3;
+    var gridLines = '', axisLabelsY = '';
+    for (var i=0;i<=gridCount;i++){
+      var val = maxVal*i/gridCount;
+      var yy = Y(val);
+      gridLines += '<line x1="'+PAD_L+'" x2="'+(W-PAD_R)+'" y1="'+yy+'" y2="'+yy+'" class="grid-line"/>';
+      axisLabelsY += '<text x="'+(PAD_L-8)+'" y="'+(yy+4)+'" text-anchor="end" class="axis-label">'+fmtWan(val)+'</text>';
     }
-    calc();
-  }
-
-  // 會不會加薪
-  var willInc=false;
-  function setInc(yes){
-    willInc=yes;
-    var svgW2='<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    var oy=g('oinc-y'),on_=g('oinc-n'),cy=g('cinc-y'),cn=g('cinc-n'),is_=g('inc-section'),msg=g('inc-msg');
-    if(!oy||!on_||!cy||!cn||!is_)return;
-    if(yes){
-      oy.className='ropt ab';cy.className='rcirc cb';cy.innerHTML=svgW2;
-      on_.className='ropt';cn.className='rcirc';cn.innerHTML='';
-      is_.style.display='';
-      if(msg){msg.style.display='block';msg.style.background='#EAF3DE';msg.style.color='#3B6D11';msg.textContent='恭喜你，你老闆真好 🎉';}
-    }else{
-      on_.className='ropt ab';cn.className='rcirc cb';cn.innerHTML=svgW2;
-      oy.className='ropt';cy.className='rcirc';cy.innerHTML='';
-      is_.style.display='none';
-      var inc=g('inc');if(inc)inc.value='';
-      var mxm=g('mxm');if(mxm)mxm.value='';
-      if(msg){msg.style.display='block';msg.style.background='#FFF5EE';msg.style.color='#C05000';msg.textContent='辛苦你了，要提升自己的能力增加本金 💪';}
+    var xTickStep = maxYears<=8?1:maxYears<=16?2:5;
+    var axisLabelsX = '';
+    for (var xy=0; xy<=maxYears; xy+=xTickStep){
+      axisLabelsX += '<text x="'+X(xy)+'" y="'+(H-PAD_B+18)+'" text-anchor="middle" class="axis-label">'+xy+'年</text>';
     }
-    calc();
+
+    function pathFor(series){
+      return series.map(function(v,idx){ return (idx===0?'M':'L')+X(years[idx])+','+Y(v); }).join(' ');
+    }
+    var etfPath = pathFor(etfSeries);
+    var boostPath = pathFor(boostSeries);
+    var gapPoly = 'M'+years.map(function(y,idx){ return X(y)+','+Y(boostSeries[idx]); }).join(' L')+
+                  ' L'+years.slice().reverse().map(function(y,ridx){ var idx=years.length-1-ridx; return X(y)+','+Y(etfSeries[idx]); }).join(' L')+' Z';
+    var targetY = Y(Math.min(goalAmt, maxVal));
+    var targetLine = '<line x1="'+PAD_L+'" x2="'+(W-PAD_R)+'" y1="'+targetY+'" y2="'+targetY+'" class="goal-guide"/>'+
+      '<text x="'+(W-PAD_R)+'" y="'+(targetY-6)+'" text-anchor="end" class="goal-label">目標 '+fmtWan(goalAmt)+'</text>';
+
+    var isNeg = state.boost < 0;
+    var negClass = isNeg ? ' negative' : '';
+    var dotBoostColor = isNeg ? 'var(--crit)' : 'var(--series-boost)';
+
+    wrapEl.innerHTML =
+      '<svg class="chart" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+(g.name||'這個目標')+'的資產成長比較圖">'+
+        gridLines + axisLabelsY + axisLabelsX +
+        '<path class="gap-fill'+negClass+'" d="'+gapPoly+'"/>'+
+        targetLine+
+        '<path class="line-etf" d="'+etfPath+'"/>'+
+        '<path class="line-boost'+negClass+'" d="'+boostPath+'"/>'+
+        '<g class="hoverGroup" style="opacity:0">'+
+          '<line class="crosshair crosshairLine" x1="0" x2="0" y1="'+PAD_T+'" y2="'+(H-PAD_B)+'"/>'+
+          '<circle class="hover-dot dotEtf" r="4" style="stroke:var(--series-etf)"/>'+
+          '<circle class="hover-dot dotBoost" r="4" style="stroke:'+dotBoostColor+'"/>'+
+        '</g>'+
+        '<rect class="overlay-rect" x="'+PAD_L+'" y="'+PAD_T+'" width="'+(W-PAD_L-PAD_R)+'" height="'+(H-PAD_T-PAD_B)+'"/>'+
+      '</svg>'+
+      '<div class="tooltip"></div>';
+
+    var svg = wrapEl.querySelector('svg');
+    var overlay = wrapEl.querySelector('.overlay-rect');
+    var hoverGroup = wrapEl.querySelector('.hoverGroup');
+    var crosshairLine = wrapEl.querySelector('.crosshairLine');
+    var dotEtf = wrapEl.querySelector('.dotEtf');
+    var dotBoost = wrapEl.querySelector('.dotBoost');
+    var tooltip = wrapEl.querySelector('.tooltip');
+
+    function handleMove(clientX, clientY){
+      var rect = svg.getBoundingClientRect();
+      var scale = W/rect.width;
+      var svgX = (clientX-rect.left)*scale;
+      var yr = Math.round(((svgX-PAD_L)/(W-PAD_L-PAD_R))*maxYears);
+      yr = Math.max(0, Math.min(maxYears, yr));
+      var x = X(yr), yE = Y(etfSeries[yr]), yB = Y(boostSeries[yr]);
+      crosshairLine.setAttribute('x1', x); crosshairLine.setAttribute('x2', x);
+      dotEtf.setAttribute('cx', x); dotEtf.setAttribute('cy', yE);
+      dotBoost.setAttribute('cx', x); dotBoost.setAttribute('cy', yB);
+      hoverGroup.style.opacity = 1;
+      tooltip.style.opacity = 1;
+      tooltip.innerHTML = '<b>'+yr+' 年後</b><br>只買大盤：'+fmtWan(etfSeries[yr])+'<br>大盤＋個股：'+fmtWan(boostSeries[yr]);
+      var wrapRect = wrapEl.getBoundingClientRect();
+      var left = (clientX-wrapRect.left)+14;
+      var top = (clientY-wrapRect.top)-10;
+      if (left + 190 > wrapRect.width) left = (clientX-wrapRect.left)-200;
+      tooltip.style.left = left+'px';
+      tooltip.style.top = top+'px';
+    }
+    overlay.addEventListener('mousemove', function(e){ handleMove(e.clientX, e.clientY); });
+    overlay.addEventListener('mouseleave', function(){ hoverGroup.style.opacity=0; tooltip.style.opacity=0; });
+    overlay.addEventListener('touchmove', function(e){ if(e.touches[0]) handleMove(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
+    overlay.addEventListener('touchend', function(){ hoverGroup.style.opacity=0; tooltip.style.opacity=0; });
+
+    return {etfFv: etfSeries[etfSeries.length-1], boostFv: boostSeries[boostSeries.length-1]};
   }
 
-  function bind(){
-    ['age','exp','pri','mon','inc','mxm','gr','ret'].forEach(function(id){var el=g(id);if(!el)return;el.addEventListener('input',function(){if(id==='exp')updEH();if(id==='inc')updIH();if(['inc','mon','mxm'].indexOf(id)!==-1){updMH();chkW();}if(id==='gr')syncR();calc();});});
-    ['dp','de'].forEach(function(id){var el=g(id);if(!el)return;el.addEventListener('input',calcDiv);});
-    [6,8,12].forEach(function(r){var b=g('rb'+r);if(b)b.addEventListener('click',function(){setRate(r);});});
-    bindOpt('os1',function(){setFam(1);});bindOpt('os2',function(){setFam(2);});
-    bindOpt('osave-y',function(){setSave(true);});bindOpt('osave-n',function(){setSave(false);});
-    bindOpt('oinc-y',function(){setInc(true);});bindOpt('oinc-n',function(){setInc(false);});
-    bindOpt('ds1',function(){setDFam(1);});bindOpt('ds2',function(){setDFam(2);});
-    bindOpt('oa',function(){setMode('a');});bindOpt('od',function(){setMode('d');});
+  /* ---------------- goal result cards (one per goal, own principal/monthly/chart) ---------------- */
+  function renderGoalResults(){
+    var container = document.getElementById('goalResults');
+    var isNeg = state.boost < 0;
+    container.innerHTML = state.goals.map(function(g){
+      return '<div class="goal-card">'+
+        '<div class="goal-card-head"><span class="gname">'+(g.name||'（未命名目標）')+'</span><span class="gtarget">目標 '+fmtWan(goalAmount(g))+'・'+goalYears(g)+' 年後・本金 '+fmtWan(g.principal)+'＋每月 '+Math.round(g.monthly).toLocaleString('zh-Hant-TW')+' 元</span></div>'+
+        '<div class="chart-wrap" data-goal="'+g.id+'"></div>'+
+        '<div class="goal-compare" data-compare="'+g.id+'"></div>'+
+        '</div>';
+    }).join('');
+
+    function pill(ok, fvVal, amount){
+      if (ok) return '<span class="status-pill status-good">✓ 達標，多出 '+fmtWan(fvVal-amount)+'</span>';
+      return '<span class="status-pill status-crit">缺口 '+fmtWan(amount-fvVal)+'</span>';
+    }
+
+    state.goals.forEach(function(g){
+      var wrapEl = container.querySelector('.chart-wrap[data-goal="'+g.id+'"]');
+      var result = buildGoalChart(g, wrapEl);
+      var goalAmt = goalAmount(g);
+      var etfOk = result.etfFv >= goalAmt;
+      var boostOk = result.boostFv >= goalAmt;
+      var compareEl = container.querySelector('.goal-compare[data-compare="'+g.id+'"]');
+      compareEl.innerHTML =
+        '<div class="gc-cell"><div class="gc-label"><span class="gc-dot" style="background:var(--series-etf)"></span>只買大盤ETF</div><div class="gc-value">'+fmtWan(result.etfFv)+'</div>'+pill(etfOk, result.etfFv, goalAmt)+'</div>'+
+        '<div class="gc-cell"><div class="gc-label"><span class="gc-dot" style="background:'+(isNeg?'var(--crit)':'var(--series-boost)')+'"></span>大盤＋自選個股</div><div class="gc-value">'+fmtWan(result.boostFv)+'</div>'+pill(boostOk, result.boostFv, goalAmt)+'</div>';
+    });
+
+    var legendBoostSw = document.getElementById('legendBoostSw');
+    var legendGapSw = document.getElementById('legendGapSw');
+    var boostColor = isNeg ? 'var(--crit)' : 'var(--series-boost)';
+    if (legendBoostSw) legendBoostSw.style.background = boostColor;
+    if (legendGapSw) legendGapSw.style.background = boostColor;
   }
-  function init(){
-    try{
-      bind();setFam(2);setDFam(2);
-      // 延遲執行確保衝資產區塊已顯示
-      setTimeout(function(){
-        if(g('osave-y'))setSave(true);
-      },50);
-    }catch(e){console.error(e);}
+
+  function renderHeadline(){
+    var box = document.getElementById('headlineBox');
+    if (!state.goals.length){ box.innerHTML=''; return; }
+    var longest = state.goals.slice().sort(function(a,b){ return goalYears(b)-goalYears(a); })[0];
+    var yrs = goalYears(longest);
+    var etfFv = fv(longest.principal, longest.monthly*12, state.etfRate, yrs);
+    var boostFv = fv(longest.principal, longest.monthly*12, state.etfRate+state.boost, yrs);
+    var diff = boostFv-etfFv;
+    if (diff > 0){
+      box.innerHTML = '<p class="hb-figure">以「'+(longest.name||'這個目標')+'」來看：在「大盤＋個股12%」這個假設下，'+yrs+' 年後多出 '+fmtWan(diff)+'</p>'+
+        '<p>只買大盤ETF，'+yrs+' 年後預估有 <b>'+fmtWan(etfFv)+'</b>；如果長期加入自選個股、年化報酬如這個假設達到 '+(state.etfRate+state.boost)+'%，有機會來到 <b>'+fmtWan(boostFv)+'</b>——中間差的 '+fmtWan(diff)+'，就是複利在長時間下放大出來的差距。但這是一個假設情境，不是保證會發生的結果，實際報酬可能優於或劣於大盤。</p>';
+    } else {
+      box.innerHTML = '<p class="hb-figure">以「'+(longest.name||'這個目標')+'」來看：'+yrs+' 年的時間還太短，複利差距還不明顯</p>'+
+        '<p>兩種情境在 '+yrs+' 年後都約是 <b>'+fmtWan(etfFv)+'</b>——把年期拉長一點，會更容易看出長期加入個股的潛在效果。</p>';
+    }
   }
-  window.addEventListener('DOMContentLoaded',init);
+
+  function renderAll(){
+    renderGoalResults();
+    renderHeadline();
+  }
+
+  /* ---------------- download as PDF (uses the browser's own print dialog) ---------------- */
+  var downloadPdfBtn = document.getElementById('downloadPdfBtn');
+  if (downloadPdfBtn){
+    downloadPdfBtn.addEventListener('click', function(){ window.print(); });
+  }
+
+  renderGoalList();
+  renderAll();
+  window.addEventListener('resize', function(){ renderAll(); });
 })();
 </script>
-<div style="max-width:600px;margin:0 auto;padding-bottom:24px">
-<button class="rbtn-print" onclick="window.print()">📄 下載我的退休規劃（儲存為 PDF）</button>
-</div>
 </body>
 </html>
